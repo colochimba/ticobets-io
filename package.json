@@ -9,9 +9,15 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "firebase": "^12.11.0",
+    "flatpickr": "^4.6.13",
+    "lucide-react": "^0.577.0",
     "next": "16.2.0",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "react-flatpickr": "^4.0.11",
+    "recharts": "^3.8.0",
+    "sweetalert2": "^11.26.24"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
