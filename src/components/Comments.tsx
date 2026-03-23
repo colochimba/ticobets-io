@@ -1,8 +1,6 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
-import { collection, query, where, orderBy, onSnapshot, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, query, where, onSnapshot, addDoc, serverTimestamp, Timestamp, FieldValue } from "firebase/firestore";
 import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
 
@@ -13,7 +11,7 @@ interface Comment {
   userName: string;
   userPhoto?: string;
   text: string;
-  createdAt: any;
+  createdAt: Timestamp | FieldValue;
 }
 
 export default function Comments({ marketId }: { marketId: string }) {
@@ -37,8 +35,8 @@ export default function Comments({ marketId }: { marketId: string }) {
       
       // Ordenamos en el cliente (javascript) usando el Timestamp
       data.sort((a, b) => {
-        const timeA = a.createdAt?.toMillis ? a.createdAt.toMillis() : Date.now();
-        const timeB = b.createdAt?.toMillis ? b.createdAt.toMillis() : Date.now();
+        const timeA = (a.createdAt as Timestamp)?.toMillis ? (a.createdAt as Timestamp).toMillis() : Date.now();
+        const timeB = (b.createdAt as Timestamp)?.toMillis ? (b.createdAt as Timestamp).toMillis() : Date.now();
         return timeA - timeB;
       });
 
@@ -50,8 +48,8 @@ export default function Comments({ marketId }: { marketId: string }) {
     return () => unsubscribe();
   }, [marketId]);
 
-  const handlePost = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handlePost = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     if (!newComment.trim() || !user) return;
     
     setIsPosting(true);
@@ -100,7 +98,7 @@ export default function Comments({ marketId }: { marketId: string }) {
                 <div className="flex items-center justify-between mb-1">
                    <span className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">{c.userName}</span>
                    <span className="text-xs text-zinc-400">
-                     {c.createdAt?.toDate ? new Intl.DateTimeFormat('es-CR', {hour: '2-digit', minute:'2-digit', day: '2-digit', month: 'short'}).format(c.createdAt.toDate()) : 'Ahora'}
+                     {(c.createdAt as Timestamp)?.toDate ? new Intl.DateTimeFormat('es-CR', {hour: '2-digit', minute:'2-digit', day: '2-digit', month: 'short'}).format((c.createdAt as Timestamp).toDate()) : 'Ahora'}
                    </span>
                 </div>
                 <p className="text-sm text-zinc-700 dark:text-zinc-300 whitespace-pre-wrap">{c.text}</p>
@@ -124,7 +122,7 @@ export default function Comments({ marketId }: { marketId: string }) {
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();
-                  handlePost(e as any);
+                  handlePost();
                 }
               }}
             />

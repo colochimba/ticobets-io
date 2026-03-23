@@ -28,7 +28,7 @@ export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
         color: "#fff",
         confirmButtonColor: "#22c55e",
       });
-    } catch (error: any) {
+    } catch (error) {
       Swal.fire({
         title: "Límite alcanzado",
         text: error.message,

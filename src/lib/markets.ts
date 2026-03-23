@@ -1,5 +1,5 @@
 import { db } from "./firebase";
-import { collection, getDocs, doc, setDoc, getDoc, query, orderBy, deleteDoc, updateDoc, writeBatch, where, serverTimestamp } from "firebase/firestore";
+import { collection, getDocs, doc, setDoc, getDoc, query, orderBy, updateDoc, writeBatch, where, serverTimestamp } from "firebase/firestore";
 
 export interface Market {
   id: string;

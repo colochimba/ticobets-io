@@ -1,0 +1,23 @@
+
+> ticobets.io@0.1.0 lint
+> eslint
+
+
+/Users/colochimba/Desktop/ticobets.io/src/app/admin/page.tsx
+  280:0  error  Parsing error: ')' expected
+
+/Users/colochimba/Desktop/ticobets.io/src/app/login/page.tsx
+  24:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  35:14  warning  'err' is defined but never used    @typescript-eslint/no-unused-vars
+
+/Users/colochimba/Desktop/ticobets.io/src/app/market/[id]/page.tsx
+  7:10  warning  'useRouter' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/colochimba/Desktop/ticobets.io/src/app/register/page.tsx
+  28:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/colochimba/Desktop/ticobets.io/src/components/Navbar.tsx
+  13:26  warning  'signInWithGoogle' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 6 problems (1 error, 5 warnings)
+

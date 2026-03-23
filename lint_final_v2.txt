@@ -1,0 +1,45 @@
+
+> ticobets.io@0.1.0 lint
+> eslint
+
+
+/Users/colochimba/Desktop/ticobets.io/src/app/admin/page.tsx
+  48:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/colochimba/Desktop/ticobets.io/src/app/admin/page.tsx:48:7
+  46 |   useEffect(() => {
+  47 |     if (isAdmin) {
+> 48 |       loadMarkets();
+     |       ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  49 |     }
+  50 |   }, [isAdmin, loadMarkets]);
+  51 |  react-hooks/set-state-in-effect
+
+/Users/colochimba/Desktop/ticobets.io/src/app/login/page.tsx
+  24:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  35:14  warning  'err' is defined but never used    @typescript-eslint/no-unused-vars
+
+/Users/colochimba/Desktop/ticobets.io/src/app/market/[id]/page.tsx
+  21:9  warning  'router' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/colochimba/Desktop/ticobets.io/src/app/page.tsx
+  8:17  warning  'TrendingUp' is defined but never used  @typescript-eslint/no-unused-vars
+  8:29  warning  'Clock' is defined but never used       @typescript-eslint/no-unused-vars
+
+/Users/colochimba/Desktop/ticobets.io/src/app/portfolio/page.tsx
+  7:70  warning  'Wallet' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/colochimba/Desktop/ticobets.io/src/app/register/page.tsx
+  28:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/colochimba/Desktop/ticobets.io/src/components/Navbar.tsx
+  13:26  warning  'signInWithGoogle' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 9 problems (1 error, 8 warnings)
+

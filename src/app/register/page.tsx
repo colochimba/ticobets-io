@@ -25,7 +25,7 @@ export default function RegisterPage() {
     try {
       await signUpWithEmail(email, password, name);
       router.push("/");
-    } catch (err: any) {
+    } catch (error) {
       setError("Error al registrar la cuenta. Asegúrate de que el correo no esté en uso.");
     } finally {
       setLoading(false);

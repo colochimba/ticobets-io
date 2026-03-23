@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { getUserPositions, Position, getTransactions, Transaction } from "@/lib/trades";
 import Link from "next/link";
-import { ArrowUpRight, ArrowDownLeft, RotateCcw, History, Briefcase, Wallet } from "lucide-react";
+import { ArrowUpRight, ArrowDownLeft, RotateCcw, History, Briefcase } from "lucide-react";
 
 export default function PortfolioPage() {
   const { user, balance } = useAuth();

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { getMarkets, deleteMarket, updateMarket, createMarket, resolveMarket, Market } from "@/lib/markets";
 import { useRouter } from "next/navigation";
@@ -11,7 +11,7 @@ import "flatpickr/dist/flatpickr.css";
 import "flatpickr/dist/themes/dark.css";
 
 export default function AdminPage() {
-  const { user, isAdmin, loading } = useAuth();
+  const { isAdmin, loading } = useAuth();
   const router = useRouter();
   const [markets, setMarkets] = useState<Market[]>([]);
   const [isFetching, setIsFetching] = useState(true);
@@ -36,18 +36,19 @@ export default function AdminPage() {
     }
   }, [loading, isAdmin, router]);
 
-  const loadMarkets = async () => {
+  const loadMarkets = useCallback(async () => {
     setIsFetching(true);
     const data = await getMarkets();
     setMarkets(data);
     setIsFetching(false);
-  };
+  }, []);
 
   useEffect(() => {
     if (isAdmin) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       loadMarkets();
     }
-  }, [isAdmin]);
+  }, [isAdmin, loadMarkets]);
 
   const handleSave = async (e: React.FormEvent) => {
      e.preventDefault();
@@ -66,8 +67,9 @@ export default function AdminPage() {
        setForm({ id: "", title: "", category: "", volume: 0, totalSi: 0, totalNo: 0, totalPool: 0, resolutionStatus: "OPEN", expiresAt: "" });
        loadMarkets();
        Swal.fire({ title: '¡Guardado!', icon: 'success', background: '#18181b', color: '#fff', timer: 1500, showConfirmButton: false });
-     } catch (error: any) {
-       Swal.fire({ title: 'Error', text: error.message, icon: 'error', background: '#18181b', color: '#fff' });
+     } catch (error) {
+       const errorMessage = error instanceof Error ? error.message : "Desconocido";
+       Swal.fire({ title: 'Error', text: errorMessage, icon: 'error', background: '#18181b', color: '#fff' });
      }
   };
 
@@ -106,8 +108,8 @@ export default function AdminPage() {
          await resolveMarket(id, resultOutcome);
          await loadMarkets();
          Swal.fire({ title: 'Mercado Resuelto', text: 'Los pagos han sido distribuidos.', icon: 'success', background: '#18181b', color: '#fff' });
-       } catch (err: any) {
-         Swal.fire({ title: 'Error', text: err.message, icon: 'error', background: '#18181b', color: '#fff' });
+       } catch (error) {
+         Swal.fire({ title: 'Error', text: ((error as Error).message), icon: 'error', background: '#18181b', color: '#fff' });
        }
     }
   };
@@ -136,8 +138,9 @@ export default function AdminPage() {
         await deleteMarket(id);
         loadMarkets();
         Swal.fire({ title: '¡Borrado!', icon: 'success', background: '#18181b', color: '#fff', showConfirmButton: false, timer: 1500 });
-      } catch (err: any) {
-        Swal.fire({ title: 'Error', text: err.message, icon: 'error', background: '#18181b', color: '#fff' });
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "Error al eliminar mercado";
+        Swal.fire({ title: 'Error', text: errorMessage, icon: 'error', background: '#18181b', color: '#fff' });
       }
     }
   };

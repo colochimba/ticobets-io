@@ -5,7 +5,7 @@ import { getMarkets, seedMarketsIfEmpty, Market, getMarketLabel } from "@/lib/ma
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { Heart, TrendingUp, Clock } from "lucide-react";
+import { Heart } from "lucide-react";
 
 function HomeContent() {
   const [markets, setMarkets] = useState<Market[]>([]);

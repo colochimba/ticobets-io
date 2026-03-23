@@ -1,7 +1,6 @@
 "use client";
 
-import { use } from "react";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState, useCallback } from "react";
 import { getMarketById, Market, getMarketLabel } from "@/lib/markets";
 import { executeTrade } from "@/lib/trades";
 import { useAuth } from "@/context/AuthContext";
@@ -19,9 +18,9 @@ export default function MarketPage({ params }: { params: Promise<{ id: string }>
   const [tradeAmount, setTradeAmount] = useState<string>("");
   const [selectedOutcome, setSelectedOutcome] = useState<"YES"|"NO">("YES");
   const [isTrading, setIsTrading] = useState(false);
-  const router = useRouter();
+  
 
-  const fetchMarket = async () => {
+  const fetchMarket = useCallback(async () => {
      try {
        const data = await getMarketById(id);
        setMarket(data);
@@ -30,11 +29,11 @@ export default function MarketPage({ params }: { params: Promise<{ id: string }>
      } finally {
        setLoading(false);
      }
-  };
+  }, [id]);
 
   useEffect(() => {
     fetchMarket();
-  }, [id]);
+  }, [fetchMarket]);
 
   const handleTrade = async () => {
     if (!user || !market || !tradeAmount || isTrading) return;
@@ -54,10 +53,11 @@ export default function MarketPage({ params }: { params: Promise<{ id: string }>
       });
       await fetchMarket();
       setTradeAmount("");
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Error desconocido";
       Swal.fire({ 
         title: 'Error en la apuesta', 
-        text: error.message, 
+        text: errorMessage, 
         icon: 'error', 
         background: '#18181b', 
         color: '#fff',

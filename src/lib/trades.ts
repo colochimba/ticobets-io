@@ -1,5 +1,5 @@
 import { db } from "./firebase";
-import { collection, addDoc, doc, runTransaction, serverTimestamp, query, where, getDocs, orderBy, limit } from "firebase/firestore";
+import { collection, doc, runTransaction, serverTimestamp, query, where, getDocs, orderBy, limit, Timestamp, FieldValue } from "firebase/firestore";
 import { Market } from "./markets";
 
 export interface Position {
@@ -8,7 +8,7 @@ export interface Position {
   marketId: string;
   outcome: "YES" | "NO";
   amount: number; // CRC bet
-  createdAt: any;
+  createdAt: Timestamp | FieldValue;
   marketTitle?: string;
 }
 
@@ -19,7 +19,7 @@ export interface Transaction {
   amount: number;
   marketId?: string;
   marketTitle?: string;
-  createdAt: any;
+  createdAt: Timestamp | FieldValue;
   status: "completed";
 }
 
@@ -182,8 +182,8 @@ export const getUserPositions = async (userId: string) => {
 
   // Client-side sort to avoid composite index requirement
   data.sort((a, b) => {
-    const tA = a.createdAt?.toMillis ? a.createdAt.toMillis() : Date.now();
-    const tB = b.createdAt?.toMillis ? b.createdAt.toMillis() : Date.now();
+    const tA = (a.createdAt as Timestamp)?.toMillis ? (a.createdAt as Timestamp).toMillis() : Date.now();
+    const tB = (b.createdAt as Timestamp)?.toMillis ? (b.createdAt as Timestamp).toMillis() : Date.now();
     return tB - tA; // desc
   });
 

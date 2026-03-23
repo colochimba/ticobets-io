@@ -21,7 +21,7 @@ export default function LoginPage() {
     try {
       await loginWithEmail(email, password);
       router.push("/");
-    } catch (err: any) {
+    } catch (error) {
       setError("Credenciales incorrectas o usuario no encontrado.");
     } finally {
       setLoading(false);
