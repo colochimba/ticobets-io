@@ -5,6 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 import { getUserPositions, Position, getTransactions, Transaction } from "@/lib/trades";
 import Link from "next/link";
 import { ArrowUpRight, ArrowDownLeft, RotateCcw, History, Briefcase } from "lucide-react";
+import { Timestamp } from "firebase/firestore";
 
 export default function PortfolioPage() {
   const { user, balance } = useAuth();
@@ -158,7 +159,7 @@ export default function PortfolioPage() {
                       </h4>
                       <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
                         {tx.marketTitle ? `Mercado: ${tx.marketTitle}` : 
-                         tx.createdAt?.toDate ? tx.createdAt.toDate().toLocaleString("es-CR") : "Recientemente"}
+                         (tx.createdAt as Timestamp)?.toDate ? (tx.createdAt as Timestamp).toDate().toLocaleString("es-CR") : "Recientemente"}
                       </p>
                     </div>
                   </div>

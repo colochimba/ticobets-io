@@ -29,9 +29,10 @@ export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
         confirmButtonColor: "#22c55e",
       });
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Error desconocido";
       Swal.fire({
         title: "Límite alcanzado",
-        text: error.message,
+        text: errorMessage,
         icon: "warning",
         background: "#18181b",
         color: "#fff",
