@@ -1,0 +1,30 @@
+
+> ticobets.io@0.1.0 build
+> next build
+
+▲ Next.js 16.2.0 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.3s
+  Running TypeScript ...
+  Finished TypeScript in 2.9s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/9) ...
+Error occurred prerendering page "/_not-found". Read more: https://nextjs.org/docs/messages/prerender-error
+Error [FirebaseError]: Firebase: Error (auth/invalid-api-key).
+    at o (.next/server/chunks/ssr/_0j_97wm._.js:1:1646)
+    at p (.next/server/chunks/ssr/_0j_97wm._.js:1:1694)
+    at $.instanceFactory (.next/server/chunks/ssr/_0j_97wm._.js:1:51241)
+    at aa.getOrInitializeService (.next/server/chunks/ssr/[root-of-the-server]__03aaw_7._.js:3:307766)
+    at aa.initialize (.next/server/chunks/ssr/[root-of-the-server]__03aaw_7._.js:3:307174)
+    at <unknown> (.next/server/chunks/ssr/_0j_97wm._.js:1:52952)
+    at <unknown> (.next/server/chunks/ssr/_0j_97wm._.js:1:52981)
+    at module evaluation (.next/server/chunks/ssr/_0j_97wm._.js:1:55243)
+    at instantiateModule (.next/server/chunks/ssr/[turbopack]_runtime.js:853:9)
+    at getOrInstantiateModuleFromParent (.next/server/chunks/ssr/[turbopack]_runtime.js:877:12) {
+  code: 'auth/invalid-api-key',
+  customData: { appName: '[DEFAULT]' },
+  digest: '825823433'
+}
+Export encountered an error on /_not-found/page: /_not-found, exiting the build.
+⨯ Next.js build worker exited with code: 1 and signal: null
